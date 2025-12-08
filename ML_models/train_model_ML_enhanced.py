@@ -115,7 +115,7 @@ def train_enhanced_model(training_data, feature_set_name, output_dir):
         'colsample_bytree': [0.8, 0.9]
     }
     
-    xgb_clf = XGBClassifier(random_state=42, objective='multi:softmax')
+    xgb_clf = XGBClassifier(random_state=42)
     xgb_grid = GridSearchCV(xgb_clf, xgb_params, cv=5, scoring='accuracy', n_jobs=-1, verbose=1)
     xgb_grid.fit(X_train, Y_train)
     

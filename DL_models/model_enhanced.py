@@ -94,8 +94,10 @@ class EnhancedResNet_IF(nn.Module):
         # Use ResNet50 for better feature extraction
         try:
             self.backbone = resnet50(weights=ResNet50_Weights.IMAGENET1K_V2)
-        except AttributeError:
-            # Fallback for older torchvision versions
+        except (AttributeError, NameError):
+            # Fallback for older torchvision versions (< 0.13)
+            import warnings
+            warnings.warn("Using deprecated pretrained=True. Consider upgrading torchvision.")
             self.backbone = resnet50(pretrained=True)
         in_features = self.backbone.fc.in_features
         self.backbone.fc = nn.Identity()
@@ -145,8 +147,10 @@ class EnhancedResNet_IFOF(nn.Module):
         # Use ResNet50 for better feature extraction
         try:
             self.backbone = resnet50(weights=ResNet50_Weights.IMAGENET1K_V2)
-        except AttributeError:
-            # Fallback for older torchvision versions
+        except (AttributeError, NameError):
+            # Fallback for older torchvision versions (< 0.13)
+            import warnings
+            warnings.warn("Using deprecated pretrained=True. Consider upgrading torchvision.")
             self.backbone = resnet50(pretrained=True)
         self.backbone.fc = nn.Identity()
         
@@ -220,8 +224,10 @@ class EnhancedEfficientNet_IF(nn.Module):
         # Use EfficientNet-B3 for better accuracy
         try:
             self.backbone = efficientnet_b3(weights=EfficientNet_B3_Weights.IMAGENET1K_V1)
-        except AttributeError:
-            # Fallback for older torchvision versions
+        except (AttributeError, NameError):
+            # Fallback for older torchvision versions (< 0.13)
+            import warnings
+            warnings.warn("Using deprecated pretrained=True. Consider upgrading torchvision.")
             self.backbone = efficientnet_b3(pretrained=True)
         in_features = self.backbone.classifier[1].in_features
         self.backbone.classifier = nn.Identity()
@@ -270,8 +276,10 @@ class EnhancedEfficientNet_IFOF(nn.Module):
         # Use EfficientNet-B3 for better feature extraction
         try:
             self.backbone = efficientnet_b3(weights=EfficientNet_B3_Weights.IMAGENET1K_V1)
-        except AttributeError:
-            # Fallback for older torchvision versions
+        except (AttributeError, NameError):
+            # Fallback for older torchvision versions (< 0.13)
+            import warnings
+            warnings.warn("Using deprecated pretrained=True. Consider upgrading torchvision.")
             self.backbone = efficientnet_b3(pretrained=True)
         self.backbone.classifier = nn.Identity()
         
