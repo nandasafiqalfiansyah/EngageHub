@@ -38,21 +38,29 @@ def predict(model, scaler, data_path, feature_set='S4'):
     # Extract features based on feature set
     if feature_set == 'S1':
         # MediaPipe facial landmarks
+        if 'x0' not in df.columns or 'y467' not in df.columns:
+            raise ValueError("MediaPipe landmark columns not found. Expected 'x0' through 'y467'.")
         X = df.loc[:, 'x0':'y467'].values
         print("Using S1: MediaPipe facial landmarks (468 landmarks)")
     elif feature_set == 'S2':
         # Gaze and head pose
         gaze_cols = [col for col in df.columns if 'gaze' in col.lower()]
         pose_cols = [col for col in df.columns if 'pose' in col.lower()]
+        if not gaze_cols and not pose_cols:
+            raise ValueError("No gaze or pose columns found. Expected columns containing 'gaze' or 'pose'.")
         X = df[gaze_cols + pose_cols].values
         print(f"Using S2: Gaze and Head Pose ({len(gaze_cols + pose_cols)} features)")
     elif feature_set == 'S3':
         # Action Units
         au_cols = [col for col in df.columns if col.startswith('AU') and col.endswith('_r')]
+        if not au_cols:
+            raise ValueError("No Action Unit columns found. Expected columns like 'AU01_r', 'AU02_r', etc.")
         X = df[au_cols].values
         print(f"Using S3: Action Units ({len(au_cols)} features)")
     elif feature_set == 'S4':
         # Combined features
+        if 'x0' not in df.columns or 'AU45_c' not in df.columns:
+            raise ValueError("Combined feature columns not found. Expected 'x0' through 'AU45_c'.")
         X = df.loc[:, "x0":"AU45_c"].values
         print(f"Using S4: Combined features ({X.shape[1]} features)")
     else:

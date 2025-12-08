@@ -18,8 +18,8 @@ DATA_DIR="../WACV data"
 OUTPUT_DIR="../Results/ML_Enhanced"
 
 # Check if data directory exists
-if [ ! -d "$DATA_DIR" ]; then
-    echo "❌ Error: Data directory not found: $DATA_DIR"
+if [ ! -d "${DATA_DIR}" ]; then
+    echo "❌ Error: Data directory not found: ${DATA_DIR}"
     echo "Please ensure you have extracted features first."
     echo ""
     echo "Steps to extract features:"
@@ -29,23 +29,23 @@ if [ ! -d "$DATA_DIR" ]; then
 fi
 
 # Check if merged data files exist
-if [ ! -f "$DATA_DIR/merged_data0.csv" ] || \
-   [ ! -f "$DATA_DIR/merged_data1.csv" ] || \
-   [ ! -f "$DATA_DIR/merged_data2.csv" ]; then
-    echo "❌ Error: Merged data files not found in $DATA_DIR"
+if [ ! -f "${DATA_DIR}/merged_data0.csv" ] || \
+   [ ! -f "${DATA_DIR}/merged_data1.csv" ] || \
+   [ ! -f "${DATA_DIR}/merged_data2.csv" ]; then
+    echo "❌ Error: Merged data files not found in ${DATA_DIR}"
     echo "Please run feature extraction first:"
     echo "  cd Feature_extract"
     echo "  python Extract_MediaPipe_features.py"
     exit 1
 fi
 
-echo "✓ Data directory found: $DATA_DIR"
+echo "✓ Data directory found: ${DATA_DIR}"
 echo "✓ Merged data files verified"
 echo ""
 
 # Create output directory
-mkdir -p "$OUTPUT_DIR"
-echo "✓ Output directory created: $OUTPUT_DIR"
+mkdir -p "${OUTPUT_DIR}"
+echo "✓ Output directory created: ${OUTPUT_DIR}"
 echo ""
 
 # Check Python dependencies
@@ -89,8 +89,8 @@ sleep 5
 cd ML_models
 
 python train_model_ML_enhanced.py \
-    --data_dir "$DATA_DIR" \
-    --output_dir "$OUTPUT_DIR"
+    --data_dir "${DATA_DIR}" \
+    --output_dir "${OUTPUT_DIR}"
 
 TRAIN_STATUS=$?
 
@@ -102,7 +102,7 @@ if [ $TRAIN_STATUS -eq 0 ]; then
     echo "✅ Training Complete!"
     echo "========================================"
     echo ""
-    echo "Results saved to: $OUTPUT_DIR"
+    echo "Results saved to: ${OUTPUT_DIR}"
     echo ""
     echo "Generated files:"
     echo "  📊 all_results_enhanced.csv - All model results"
@@ -110,7 +110,7 @@ if [ $TRAIN_STATUS -eq 0 ]; then
     echo "  📈 results_*.csv - Individual feature set results"
     echo ""
     echo "To view results:"
-    echo "  cat $OUTPUT_DIR/all_results_enhanced.csv"
+    echo "  cat \"${OUTPUT_DIR}/all_results_enhanced.csv\""
     echo ""
     echo "To use trained models, see:"
     echo "  - PANDUAN_LENGKAP.md (Indonesian)"

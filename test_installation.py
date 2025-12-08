@@ -113,7 +113,7 @@ def test_model_loading():
         
         # Try to instantiate
         rf = RandomForestClassifier(n_estimators=10, random_state=42)
-        xgb = XGBClassifier(n_estimators=10, random_state=42)
+        xgb = XGBClassifier(n_estimators=10, random_state=42, objective='multi:softmax')
         gb = GradientBoostingClassifier(n_estimators=10, random_state=42)
         
         print("\n✅ All model classes can be instantiated!")

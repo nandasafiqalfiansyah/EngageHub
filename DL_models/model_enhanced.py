@@ -92,7 +92,11 @@ class EnhancedResNet_IF(nn.Module):
         super(EnhancedResNet_IF, self).__init__()
         
         # Use ResNet50 for better feature extraction
-        self.backbone = resnet50(weights=ResNet50_Weights.IMAGENET1K_V2)
+        try:
+            self.backbone = resnet50(weights=ResNet50_Weights.IMAGENET1K_V2)
+        except AttributeError:
+            # Fallback for older torchvision versions
+            self.backbone = resnet50(pretrained=True)
         in_features = self.backbone.fc.in_features
         self.backbone.fc = nn.Identity()
         
@@ -139,7 +143,11 @@ class EnhancedResNet_IFOF(nn.Module):
         super(EnhancedResNet_IFOF, self).__init__()
         
         # Use ResNet50 for better feature extraction
-        self.backbone = resnet50(weights=ResNet50_Weights.IMAGENET1K_V2)
+        try:
+            self.backbone = resnet50(weights=ResNet50_Weights.IMAGENET1K_V2)
+        except AttributeError:
+            # Fallback for older torchvision versions
+            self.backbone = resnet50(pretrained=True)
         self.backbone.fc = nn.Identity()
         
         # Enhanced fusion module
@@ -210,7 +218,11 @@ class EnhancedEfficientNet_IF(nn.Module):
         super(EnhancedEfficientNet_IF, self).__init__()
         
         # Use EfficientNet-B3 for better accuracy
-        self.backbone = efficientnet_b3(weights=EfficientNet_B3_Weights.IMAGENET1K_V1)
+        try:
+            self.backbone = efficientnet_b3(weights=EfficientNet_B3_Weights.IMAGENET1K_V1)
+        except AttributeError:
+            # Fallback for older torchvision versions
+            self.backbone = efficientnet_b3(pretrained=True)
         in_features = self.backbone.classifier[1].in_features
         self.backbone.classifier = nn.Identity()
         
@@ -256,7 +268,11 @@ class EnhancedEfficientNet_IFOF(nn.Module):
         super(EnhancedEfficientNet_IFOF, self).__init__()
         
         # Use EfficientNet-B3 for better feature extraction
-        self.backbone = efficientnet_b3(weights=EfficientNet_B3_Weights.IMAGENET1K_V1)
+        try:
+            self.backbone = efficientnet_b3(weights=EfficientNet_B3_Weights.IMAGENET1K_V1)
+        except AttributeError:
+            # Fallback for older torchvision versions
+            self.backbone = efficientnet_b3(pretrained=True)
         self.backbone.classifier = nn.Identity()
         
         # Enhanced fusion module
